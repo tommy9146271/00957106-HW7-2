@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Local Storage</title>
+        <style type="text/CSS">
+            table {
+                width: 90%;
+                border-collapse: collapse;
+                background-color: lightblue;
+                font-family: Perpetua;
+            }
+            table, td, th {
+                border: 1px solid black;
+                padding: 4px;
+            }
+            th {
+                text-align: center;
+                color: white;
+                background-color: darkblue;
+            }
+            tr.oddrow {
+                background-color: white;
+            }
+            td {
+                text-align: center;
+            }
+        </style>
+        <script type="text/javascript">
+            window.addEventListener("load", ()=>{
+                var str = "<table><tr><th>Title</th><th>Author</th><th>Year</th><th>URL</th></tr>";
+                document.getElementById("addButton").addEventListener("click", ()=>{
+                    const data = {title : document.getElementById("title").value, name : document.getElementById("name").value, year : document.getElementById("year").value, url : document.getElementById("url").value};
+                    str += "<tr><td>" + data.title + "</td><td>" + data.name + "</td><td>" + data.year + "</td><td><a href='" + data.url + "' target='_blank'>" + data.url + "</a></td></tr>";
+                    document.getElementById("display").innerHTML = str + "</table>";
+                    const myJSON = JSON.stringify(data);
+                    localStorage.setItem("ntou-" + (new Date().getTime() - new Date(1970, 1, 1).getTime()), myJSON);
+                }, false);
+                document.getElementById("removeAllButton").addEventListener("click", ()=>{
+                    localStorage.clear();
+                    window.alert("All items were removed!");
+                    str = "<table><tr><th>Title</th><th>Author</th><th>Year</th><th>URL</th></tr>";
+                    document.getElementById("display").innerHTML = str + "</table>";
+                }, false);
+            }, false);
+        </script>
+    </head>
+    <body>
+        <p><a href="https://tommy9146271.github.io/00957106-HW7-2/00957106-HW7-2.html" target="_blank">GitHub Link</a></p>
+        <form action="#">
+            <p>
+                <label>Book Title:
+                    <input type="text" id="title">
+                </label>
+                <label>Author(s):
+                    <input type="text" id="name">
+                </label>
+                <label>Year:
+                    <input type="number" id="year">
+                </label>
+                <label>Book URL:
+                    <input type="url" id="url">
+                </label>
+            </p>
+            <p>
+                <input type="button" value="Add New Item" id="addButton">
+                <input type="button" value="Remove All Items" id="removeAllButton">
+            </p>
+        </form>
+        <hr>
+        <div id="display">
+        </div>
+    </body>
+</html>
